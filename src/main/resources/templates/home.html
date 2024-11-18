@@ -29,6 +29,11 @@
             bottom: 20px;
         }
         
+        .addVehicule {
+            text-align: center;
+            margin: 20px;
+        }
+
         .controls {
             text-align: center;
             margin: 20px;
@@ -71,9 +76,25 @@
         </div>
     </div>
     
-    <div class="controls">
+    <div class="addVehicule">
+        
         <form action="/addTesla" method="post">
             <button type="submit">Ajouter une Tesla</button>
+        </form>
+        <form action="/addHelicopter" method="post">
+            <button type="submit">Ajouter un Helicoptère</button>
+        </form>
+    </div>
+
+    <div class="controls">
+        <form action="/startRace" method="post">
+            <button type="submit">Démarrer la course</button>
+        </form>
+        <form action="/stopRace" method="post">
+            <button type="submit">Arrêter la course</button>
+        </form>
+        <form action="/resetRace" method="post">
+            <button type="submit">Réinitialiser la course</button>
         </form>
     </div>
     
@@ -83,6 +104,7 @@
             <img th:src="${vehicle.imageUrl}" width="30">
             <span th:text="${vehicle.type}"></span>
             <span th:text="'Vitesse: ' + ${vehicle.speed}"></span>
+            <button th:onclick="'/removeVehicle?id=' + ${vehicle.id} + '\';'">Supprimer</button>
         </div>
     </div>
 

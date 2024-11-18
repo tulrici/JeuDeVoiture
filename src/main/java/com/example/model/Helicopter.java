@@ -3,13 +3,13 @@ package com.example.model;
 import jakarta.persistence.Entity;
 
 @Entity
-public class Tesla extends Vehicle {
-    public Tesla() {
+public class Helicopter extends Vehicle {
+    public Helicopter() {
         super();
     }
 
-    public Tesla(int x, int y) {
-        super(x, y, 0, "Tesla", "/images/tesla.png", false);
+    public Helicopter(int x, int y) {
+        super(x, y, 0, "Helicopter", "/images/Helicopter.png", true);
     }
 
     @Override
@@ -19,8 +19,8 @@ public class Tesla extends Vehicle {
 
     @Override
     public void accelerate() {
-        if (this.speed < 15) { // Tesla accélère plus vite
-            this.speed += 2;
+        if (this.speed < 30) { // Helicopter accélère très vite
+            this.speed += 5;
         }
     }
 

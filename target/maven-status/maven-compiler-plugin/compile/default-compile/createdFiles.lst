@@ -1,0 +1,6 @@
+com/example/model/Tesla.class
+com/example/App.class
+com/example/config/SecurityConfig.class
+com/example/repository/VehicleRepository.class
+com/example/controller/GameController.class
+com/example/model/Vehicle.class
