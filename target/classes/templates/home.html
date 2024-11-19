@@ -103,17 +103,40 @@
         <div th:each="vehicle : ${vehicles}" class="vehicle-item">
             <img th:src="${vehicle.imageUrl}" width="30">
             <span th:text="${vehicle.type}"></span>
-            <span th:text="'Vitesse: ' + ${vehicle.speed}"></span>
-            <button th:onclick="'/removeVehicle?id=' + ${vehicle.id} + '\';'">Supprimer</button>
-        </div>
-    </div>
+            <span th:text="'Position: ' + ${vehicle.y ?: 0 - initialPositiony} + 'm'"></span>
+            <span th:text="'Vitesse: ' + ${vehicle.speed ?: 0} + 'km/h '"></span>
+            <a th:href="@{/removeVehicle(id=${vehicle.id})}" class="btn btn-danger">Supprimer</a>    </div>
 
-    <script>
-        function updateVehicles() {
-            // Vous pouvez ajouter ici la logique de mise à jour des positions
-        }
-        
-        setInterval(updateVehicles, 50);
-    </script>
-</body>
+<script>
+    let raceInterval;
+
+    function startRace() {
+        const roadLine = document.querySelector('.road-line');
+        let roadPosition = 0;
+
+        raceInterval = setInterval(() => {
+            // Scroll the road
+            roadPosition += 5; // Adjust as needed
+            roadLine.style.transform = `translateY(${roadPosition}px)`;
+
+            // Update vehicle positions
+            fetch('/updateRace')
+                .then(response => response.json())
+                .then(vehicles => {
+                    vehicles.forEach(vehicle => {
+                        const vehicleElement = document.querySelector(`[data-vehicle-id="${vehicle.id}"]`);
+                        if (vehicleElement) {
+                            // Update vehicle position and speed
+                            vehicleElement.style.left = vehicle.x + 'px';
+                            vehicleElement.style.bottom = vehicle.y + 'px';
+                        }
+                    });
+                });
+        }, 100); // Adjust speed of updates as needed
+    }
+
+    function stopRace() {
+        clearInterval(raceInterval);
+    }
+</script></body>
 </html> 

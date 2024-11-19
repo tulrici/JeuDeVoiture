@@ -17,35 +17,56 @@ public class GameController {
     
     @Autowired
     private VehicleRepository vehicleRepository;
+
+    private int initialPositionx = -15;
+    private int initialPositiony = 160;
+    private int maxXPosition = 700;
     
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("vehicles", vehicleRepository.findAll());
         return "home";
     }
-    
+
     @PostMapping("/addTesla")
     public String addTesla() {
-        Tesla tesla = new Tesla(50, 300);
+        // Adjust initialPositionx to ensure no null values
+        if (vehicleRepository.count() == 0) {
+            initialPositionx = -15; // Place the first vehicle at a fixed position
+        } else if (initialPositionx < maxXPosition) {
+            initialPositionx += 50; // Increment position for subsequent vehicles
+        } else {
+            return "redirect:/"; // Reset if exceeding maximum
+        }
+        Tesla tesla = new Tesla(initialPositionx, initialPositiony);
         vehicleRepository.save(tesla);
         return "redirect:/";
     }
 
     @PostMapping("/addHelicopter")
     public String addHelicopter() {
-        Helicopter helicopter = new Helicopter(50, 300);
+        // Adjust initialPositionx to ensure no null values
+        if (vehicleRepository.count() == 0) {
+            initialPositionx = -15; // Place the first vehicle at a fixed position
+        } else if (initialPositionx < maxXPosition) {
+            initialPositionx += 50; // Increment position for subsequent vehicles
+        } else {
+            return "redirect:/"; // Reset if exceeding maximum
+        }
+        Helicopter helicopter = new Helicopter(initialPositionx, initialPositiony);
         vehicleRepository.save(helicopter);
         return "redirect:/";
     }
 
-    @GetMapping("/removeVehicle")
+    @PostMapping("/removeVehicle")
     public String removeVehicle(@RequestParam("id") Long id) {
         vehicleRepository.deleteById(id);
         return "redirect:/";
     }    
 
-    @GetMapping("/startRace")
+    @PostMapping("/startRace")
     public String startRace() {
+
         for (Vehicle vehicle : vehicleRepository.findAll()) {
             vehicle.accelerate();
             vehicle.move();
@@ -53,7 +74,7 @@ public class GameController {
         return "redirect:/";
     }
 
-    @GetMapping("/stopRace")
+    @PostMapping("/stopRace")
     public String stopRace() {
         for (Vehicle vehicle : vehicleRepository.findAll()) {
             
@@ -65,14 +86,19 @@ public class GameController {
         return "redirect:/";
     }
 
-    @GetMapping("/resetRace")
+    @PostMapping("/resetRace")
     public String resetRace() {
         for (Vehicle vehicle : vehicleRepository.findAll()) {
-            vehicle.setX(50);
-            vehicle.setY(300);
+            removeVehicle(vehicle.getId());
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("/endRace")
+    public String endRace() {
+        for (Vehicle vehicle : vehicleRepository.findAll()) {
             vehicle.setSpeed(0);
         }
         return "redirect:/";
     }
-    
 }

@@ -17,12 +17,14 @@ public abstract class Vehicle {
     protected String type;
     protected String imageUrl;
     protected Boolean flying;
+    protected int maxSpeed;
+    protected int acceleration;
 
     protected Vehicle() {
         // Constructeur vide nécessaire pour JPA
     }
 
-    public Vehicle(int x, int y, int speed, String type, String imageUrl, boolean flying) {
+    public Vehicle(int x, int y, int speed, String type, String imageUrl, boolean flying, int maxSpeed, int acceleration) {
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -50,4 +52,9 @@ public abstract class Vehicle {
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public boolean getFlying() { return flying; }
     public void setFlying(boolean flying) { this.flying = flying; }
+    public int getMaxSpeed() { return maxSpeed; }
+    public void setMaxSpeed(int maxSpeed) { this.maxSpeed = maxSpeed; }
+    public int getAcceleration() { return acceleration; }
+    public void setAcceleration(int acceleration) { this.acceleration = acceleration; }
+
 } 

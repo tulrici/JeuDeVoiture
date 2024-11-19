@@ -9,18 +9,18 @@ public class Tesla extends Vehicle {
     }
 
     public Tesla(int x, int y) {
-        super(x, y, 0, "Tesla", "/images/tesla.png", false);
+        super(x, y, 0, "Tesla", "/images/tesla.png", false, 15, 2);
     }
 
     @Override
     public void move() {
-        this.x += this.speed;
+        this.y += this.speed;
     }
 
     @Override
     public void accelerate() {
-        if (this.speed < 15) { // Tesla accélère plus vite
-            this.speed += 2;
+        if (this.speed < this.maxSpeed) { // Tesla accélère plus vite
+            this.speed += this.acceleration;
         }
     }
 

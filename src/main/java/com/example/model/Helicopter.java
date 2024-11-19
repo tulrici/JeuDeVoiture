@@ -9,18 +9,18 @@ public class Helicopter extends Vehicle {
     }
 
     public Helicopter(int x, int y) {
-        super(x, y, 0, "Helicopter", "/images/Helicopter.png", true);
+        super(x, y, 0, "Helicopter", "/images/Helicopter.png", true, 30, 5);
     }
 
     @Override
     public void move() {
-        this.x += this.speed;
+        this.y += this.speed;
     }
 
     @Override
     public void accelerate() {
-        if (this.speed < 30) { // Helicopter accélère très vite
-            this.speed += 5;
+        if (this.speed < this.maxSpeed) { // Helicopter accélère très vite
+            this.speed += this.acceleration;
         }
     }
 
